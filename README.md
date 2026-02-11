@@ -1,76 +1,75 @@
-# AI Video Description Generator
+# 🤖 AI Video Description Generator
 
-An end-to-end AI pipeline that generates **student-friendly learning descriptions** from a video link.
+An end-to-end AI pipeline that transforms video URLs into **structured, student-friendly learning materials**. 
 
-The project downloads a video, extracts audio, transcribes speech, and uses a local LLM to create a structured educational summary.
+This project automates the heavy lifting of media processing—downloading, audio extraction, and transcription—before leveraging a local LLM to generate high-quality educational summaries and study guides.
 
-## How It Works
+## 🚀 How It Works
 
-1. Download video from URL (YouTube supported)
-2. Extract and normalize audio
-3. Transcribe audio using Whisper
-4. Split long transcripts into chunks
-5. Generate study-style description with a local GGUF model
+The pipeline follows a modular 5-step process:
+1. **Ingestion:** Downloads video from any supported URL via `yt-dlp`.
+2. **Audio Processing:** Extracts and normalizes audio using `ffmpeg`.
+3. **Transcription:** Converts speech to text with high accuracy using `faster-whisper`.
+4. **Context Management:** Smart-chunks long transcripts to fit within LLM context limits.
+5. **Inference:** Generates a structured `.md` summary using a local GGUF model via `llama-cpp-python`.
 
-## Tech Stack
+## 🛠 Tech Stack
 
-- yt-dlp – video download  
-- ffmpeg – audio extraction & chunking  
-- faster-whisper – transcription  
-- llama-cpp-python – local LLM inference  
-- python-dotenv – configuration  
+- **Media:** `yt-dlp`, `ffmpeg`
+- **Speech-to-Text:** `faster-whisper`
+- **LLM Engine:** `llama-cpp-python`
+- **Environment:** Python, Jupyter, `python-dotenv`
 
-## Project Structure
-
+## 📂 Project Structure
+```text
 models/
-- Qwen2.5-14B-Instruct-Q4_K_M.gguf   # local LLM (not committed)
+└── Qwen2.5-14B-Instruct-Q4_K_M.gguf  # Local LLM (Git ignored)
 
 output/<job_name>/
-- work/            # downloaded video + audio.wav
-- chunks/          # chunked audio files
-- chunk_results/   # per-chunk transcripts
-- final/           # final transcript + description
+├── work/            # Raw video and extracted audio.wav
+├── chunks/          # Segmented audio files for processing
+├── chunk_results/   # Individual transcriptions per chunk
+└── final/           # Final transcript (txt, json, srt, vtt) & AI description
+```
 
-description_generator.ipynb
-- main pipeline notebook
+## ⚙️ Setup & Installation
 
-## Setup
-
-### Install (Mac)
-
+### 1. System Dependencies (Mac)
+Ensure you have `ffmpeg` installed:
+```bash
 brew install ffmpeg
+```
+
+### 2. Python Environment
+Install the core pipeline requirements:
+```bash
 pip install -U yt-dlp faster-whisper llama-cpp-python python-dotenv torch
+```
 
-### Environment
+### 3. Environment Configuration
+Create a `.env` file in the root directory:
+```env
+HF_TOKEN=your_huggingface_token
+```
 
-Create .env file:
+## 📖 Usage
 
-HF_TOKEN=your_token
+1. Open `description_generator.ipynb`.
+2. Set your configuration: `URL`, `JOB_NAME`, and `MODEL_PATH`.
+3. **Run All Cells**. The pipeline is resumable.
 
-## Usage
+## 🤝 Contributing
 
-1. Open description_generator.ipynb  
-2. Set:
-   - URL = video link  
-   - JOB_NAME = output folder  
-   - MODEL_PATH = path to GGUF model  
-3. Run all cells
+We welcome contributions! 
+* **UI/UX:** Help us move to a Gradio or Streamlit interface.
+* **Prompt Engineering:** Refine the "student-friendly" prompts.
+* **Optimization:** Improve Apple Silicon (MPS) support.
 
-### Output
+**To contribute:** Fork, Branch, Commit, and Open a Pull Request.
 
-output/<JOB_NAME>/final/
-- transcript.txt  
-- transcript.json  
-- transcript.srt  
-- transcript.vtt  
-- student_description.md  
+## 📜 License
 
-## Notes
+Distributed under the MIT License.
 
-- Designed for long lectures and educational videos  
-- Fully local – no external API calls for summarization  
-- Resumable chunk processing  
-
-## License
-
-MIT
+---
+*Built for students, by developers.*
