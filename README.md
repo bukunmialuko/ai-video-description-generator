@@ -72,4 +72,3 @@ We welcome contributions!
 Distributed under the MIT License.
 
 ---
-*Built for students, by developers.*
