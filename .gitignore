@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Large AI models
+models/**
+!models/**/
+!models/**/.gitkeep
+
+# Generated outputs
+# Generated outputs
+output/**
+!output/**/
+!output/**/.gitkeep
+
+*.log
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
